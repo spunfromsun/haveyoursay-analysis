@@ -1,6 +1,6 @@
 # haveyoursay-analysis
 
-Standalone toolkit to fetch EU "Have Your Say" feedback for a given `publicationId`, extract attachment metadata, download attachments, and organize files for analysis.
+Standalone toolkit to fetch European Union (EU) "Have Your Say" feedback for a given `publicationId`, extract attachment metadata, download attachments, and organize files for analysis.
 
 > **Note:** This project is inspired by and complements the [haveyoursay](https://github.com/luiscape/haveyoursay) tool. While the original project provides comprehensive database-driven collection and text extraction, this tool focuses on lightweight, direct API access with modern Python packaging for quick feedback and attachment downloads.
 
@@ -24,7 +24,7 @@ The EC "Better Regulation" API structure has evolved. This tool parses feedback 
 
 ## Acknowledgments
 
-This project was inspired by [luiscape/haveyoursay](https://github.com/luiscape/haveyoursay), which provides comprehensive database-driven tools for EU Better Regulation data collection. This implementation takes a different architectural approach focused on lightweight, direct-to-CSV workflows.
+This project was inspired by [luiscape/haveyoursay](https://github.com/ghxm/haveyoursay), which provides comprehensive database-driven tools for EU Better Regulation data collection. This implementation takes a different architectural approach focused on lightweight, direct-to-CSV workflows.
 
 ## License
 
