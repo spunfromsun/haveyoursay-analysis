@@ -1,0 +1,83 @@
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name = "haveyoursay-analysis"
+version = "0.1.0"
+description = "Standalone tools to fetch EU 'Have Your Say' feedback and attachments for a given publicationId, and organize outputs for analysis."
+authors = [
+  { name = "spunfromsun" }
+]
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+keywords = ["EU", "Have Your Say", "feedback", "attachments", "analysis"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+
+dependencies = [
+  "requests>=2.31",
+  "pandas>=2.2",
+  "typer>=0.12",
+  "tqdm>=4.66",
+  "backoff>=2.2",
+  "lxml>=5",
+  "pdfplumber>=0.11",
+  "python-docx>=1.1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7",
+  "mypy>=1",
+  "ruff>=0.1",
+  "pandas-stubs",
+]
+
+[project.urls]
+Homepage = "https://github.com/spunfromsun/haveyoursay-analysis"
+Issues = "https://github.com/spunfromsun/haveyoursay-analysis/issues"
+
+[project.scripts]
+# Exposes a CLI command `haveyoursay-analysis`
+haveyoursay-analysis = "haveyoursay_analysis.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/haveyoursay_analysis"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+exclude = [".git", "__pycache__", "build", "dist", ".venv", "*.egg-info"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = []
+
+[tool.mypy]
+python_version = "3.10"
+strict = false
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+
+[[tool.mypy.overrides]]
+module = "backoff.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "tqdm.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "pdfplumber.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "docx.*"
+ignore_missing_imports = true
+
