@@ -77,13 +77,16 @@ def download_attachments_from_csv(
 
 def organize_by_user_type(
     attachments_dir: Path,
+    attachments_csv: Path,
     feedback_csv: Path,
     out_dir: Path,
     only_user_types: Optional[Iterable[str]] = None,
     move: bool = False,
 ) -> int:
     """
-    Organize files into subfolders by `userType` using `feedback.csv` mapping.
+    Organize files into subfolders by `userType` using mappings from
+    `attachments.csv` (file_name -> feedback_id) and `feedback.csv` (feedback_id -> userType).
+
     If `move` is False, files are copied; otherwise moved.
 
     Returns number of files organized.
@@ -95,18 +98,26 @@ def organize_by_user_type(
 
     fb = pd.read_csv(feedback_csv)
     fb = fb[["feedback_id", "userType"]].dropna()
-    mapping = dict(zip(fb["feedback_id"].astype(str), fb["userType"].astype(str)))
+    fid_to_user = dict(zip(fb["feedback_id"].astype(str), fb["userType"].astype(str)))
+
+    at = pd.read_csv(attachments_csv)
+    at = at[["file_name", "feedback_id"]].dropna()
+    fname_to_fid = dict(zip(at["file_name"].astype(str), at["feedback_id"].astype(str)))
 
     count = 0
+    only_set = set(only_user_types) if only_user_types else None
+
     for p in attachments_dir.iterdir():
         if not p.is_file():
             continue
-        # Heuristic: assume filename prefix is feedback_id, else skip
-        fid = p.stem.split("_")[0]
-        user_type = mapping.get(fid)
+        fname = p.name
+        fid = fname_to_fid.get(fname)
+        if not fid:
+            continue
+        user_type = fid_to_user.get(fid)
         if not user_type:
             continue
-        if only_user_types and user_type not in set(only_user_types):
+        if only_set and user_type not in only_set:
             continue
 
         target_dir = out_dir / user_type

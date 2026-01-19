@@ -2,7 +2,7 @@
 
 Standalone toolkit to fetch European Union (EU) "Have Your Say" feedback for a given `publicationId`, extract attachment metadata, download attachments, and organize files for analysis.
 
-> **Note:** This project is inspired by and complements the [haveyoursay](https://github.com/luiscape/haveyoursay) tool. While the original project provides comprehensive database-driven collection and text extraction, this tool focuses on lightweight, direct API access with modern Python packaging for quick feedback and attachment downloads.
+> **Note:** This project is inspired by and complements the [haveyoursay](https://github.com/ghxm/haveyoursay) tool. While the original project provides comprehensive database-driven collection and text extraction, this tool focuses on lightweight, direct API access with modern Python packaging for quick feedback and attachment downloads.
 
 ## Quick Start
 

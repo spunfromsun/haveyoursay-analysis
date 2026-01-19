@@ -8,6 +8,7 @@ from tqdm import tqdm
 
 from .api import fetch_feedback, extract_feedback_and_attachments
 from .files import download_attachments_from_csv, organize_by_user_type
+from .compare import compare_phases, compare_attachments, generate_report
 
 app = typer.Typer(help="Tools for EU 'Have Your Say' feedback & attachments")
 
@@ -68,20 +69,40 @@ def download(
 @app.command()
 def organize(
     attachments_dir: Path = typer.Option(..., help="Directory with downloaded attachments"),
+    attachments_csv: Path = typer.Option(..., help="Path to attachments.csv"),
     feedback_csv: Path = typer.Option(..., help="Path to feedback.csv"),
     out: Path = typer.Option(..., help="Output base directory for userType folders"),
-    only: Optional[List[str]] = typer.Option(None, help="Filter by userType, e.g., NGO TRADE_UNION"),
+    only: Optional[List[str]] = typer.Option(None, help="Filter by userType; repeat flag for multiple values, e.g., --only NGO --only TRADE_UNION"),
     move: bool = typer.Option(False, help="Move files instead of copy"),
 ):
-    """Organize downloaded attachments into subfolders by userType."""
+    """Organize downloaded attachments into subfolders by userType using attachments.csv and feedback.csv."""
     n = organize_by_user_type(
         attachments_dir=attachments_dir,
+        attachments_csv=attachments_csv,
         feedback_csv=feedback_csv,
         out_dir=out,
         only_user_types=only,
         move=move,
     )
     typer.echo(f"Organized {n} files into {out}")
+
+
+@app.command()
+def compare(
+    feedback_1: Path = typer.Option(..., help="Path to first feedback.csv (e.g., Phase 2)"),
+    feedback_2: Path = typer.Option(..., help="Path to second feedback.csv (e.g., Phase 3)"),
+    attachments_1: Path = typer.Option(..., help="Path to first attachments.csv"),
+    attachments_2: Path = typer.Option(..., help="Path to second attachments.csv"),
+    label_1: str = typer.Option("Phase 1", help="Label for first dataset"),
+    label_2: str = typer.Option("Phase 2", help="Label for second dataset"),
+    report_out: Optional[Path] = typer.Option(None, help="Output file for detailed comparison CSV"),
+):
+    """Compare two phases by feedback_id; show differences in entries and attachments."""
+    f_comp = compare_phases(feedback_1, feedback_2, label_1=label_1, label_2=label_2)
+    a_comp = compare_attachments(attachments_1, attachments_2, label_1=label_1, label_2=label_2)
+
+    report = generate_report(f_comp, a_comp, output_csv=report_out)
+    typer.echo(report)
 
 
 if __name__ == "__main__":
