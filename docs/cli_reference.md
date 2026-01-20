@@ -92,8 +92,8 @@ haveyoursay-analysis organize [OPTIONS]
 
 **Output:**
 
-- Files organized into subfolders by userType (NGO/, TRADE_UNION/, etc.)
-- Count of files organized
+
+> **Customization Note (Project-Specific):** The default `--only` examples (NGO, TRADE_UNION) reflect the original AI initiative analysis. For other projects, change the `--only` values and, if needed, adjust `organize_by_user_type` in `files.py` to reflect your stakeholder categories (e.g., companies, academia, public authority, country-specific filters).
 
 **Example:**
 
