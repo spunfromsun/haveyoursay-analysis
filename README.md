@@ -4,6 +4,33 @@ Standalone toolkit to fetch European Union (EU) "Have Your Say" feedback for a g
 
 > **Note:** This project is inspired by and complements the [haveyoursay](https://github.com/ghxm/haveyoursay) tool. While the original project provides comprehensive database-driven collection and text extraction, this tool focuses on lightweight, direct API access with modern Python packaging for quick feedback and attachment downloads.
 
+```mermaid
+graph LR
+    subgraph External_API ["External API"]
+        EC[EC Have Your Say API]
+    end
+
+    subgraph Core_Library ["src/haveyoursay_analysis"]
+        API[api.py<br/>Fetch & Parse]
+        FILES[files.py<br/>Download & Organize]
+        COMPARE[compare.py<br/>Cross-Phase Analytics]
+    end
+
+    subgraph Output_Data ["Local Storage"]
+        CSV[(Metadata CSVs)]
+        FOLDERS[Organized Folders<br/>NGO / Trade Union]
+        REPORT[Comparison Report]
+    end
+
+    %% Flow of data
+    EC --> API
+    API --> CSV
+    CSV --> FILES
+    FILES --> FOLDERS
+    CSV --> COMPARE
+    COMPARE --> REPORT
+```
+
 ## Installation
 
 ### From GitHub (recommended for users)
