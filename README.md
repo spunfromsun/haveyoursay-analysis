@@ -24,7 +24,7 @@ The EC "Better Regulation" API structure has evolved. This tool parses feedback 
 
 ## Acknowledgments
 
-This project was inspired by [luiscape/haveyoursay](https://github.com/ghxm/haveyoursay), which provides comprehensive database-driven tools for EU Better Regulation data collection. This implementation takes a different architectural approach focused on lightweight, direct-to-CSV workflows.
+This project was inspired by [ghxm/haveyoursay](https://github.com/ghxm/haveyoursay), which provides comprehensive database-driven tools for EU Better Regulation data collection. This implementation takes a different architectural approach focused on lightweight, direct-to-CSV workflows.
 
 ## License
 
