@@ -1,0 +1,22 @@
+site_name: haveyoursay-analysis
+site_description: Tools for EU "Have Your Say" feedback and attachment analysis
+repo_url: https://github.com/spunfromsun/haveyoursay-analysis
+repo_name: haveyoursay-analysis
+
+nav:
+  - Home: index.md
+  - Getting Started: getting_started.md
+  - CLI Reference: cli_reference.md
+  - Examples: examples.md
+  - API Reference: api.md
+
+theme:
+  name: material
+  palette:
+    primary: blue
+    accent: teal
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - tables

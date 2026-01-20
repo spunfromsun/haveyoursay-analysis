@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  haveyoursay:
+    build: .
+    volumes:
+      - ./data:/data
+    working_dir: /data
+    # Example: docker-compose run --rm haveyoursay fetch --publication-id 14488 --out /data/initiative_14488
