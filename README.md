@@ -78,7 +78,7 @@ haveyoursay-analysis compare \
 
 ## Docker Usage
 
-> **Note on Customization**: The stakeholder filtering by user type (NGO, TRADE_UNION) was designed for the original AI initiative analysis. If you adapt this tool for your own projects, you'll want to customize the `organize` command filters and analysis logic for your specific stakeholder categories or analysis needs. See the [JOURNEY.md](JOURNEY.md) guide for customization examples.
+> **Note on Customization**: The stakeholder filtering by user type (NGO, TRADE_UNION) was designed for the original AI initiative analysis. If you adapt this tool for your own projects, customize the `organize` command filters and analysis logic for your stakeholder categories or analysis needs.
 ```bash
 docker run --rm -v $(pwd)/data:/data haveyoursay-analysis \
   fetch --publication-id 14488 --out /data/14488
