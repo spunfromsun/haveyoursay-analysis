@@ -9,8 +9,12 @@ import requests
 from tqdm import tqdm
 
 # Default document download endpoint. Adjust if the EC API changes.
+# Note: `/api/document/{id}` returns the SPA HTML page; the binary file is
+# served by `/api/download/{id}` (with a Content-Disposition attachment header).
+# The endpoint converts every upload to PDF regardless of the original format,
+# so we always save downloads with a `.pdf` extension.
 BASE_URL = "https://ec.europa.eu/info/law/better-regulation"
-DOCUMENT_URL_TEMPLATE = f"{BASE_URL}/api/document/{{document_id}}"
+DOCUMENT_URL_TEMPLATE = f"{BASE_URL}/api/download/{{document_id}}"
 
 
 @backoff.on_exception(backoff.expo, (requests.RequestException,), max_tries=5)
@@ -58,8 +62,11 @@ def download_attachments_from_csv(
             failed += 1
             continue
 
-        # derive output path
-        out_path = out_dir / str(fname)
+        # The EC endpoint always returns a PDF, regardless of the original
+        # upload format (.docx, .odt, ...). Force the `.pdf` extension so the
+        # saved file actually opens in PDF viewers.
+        stem, _ = os.path.splitext(str(fname))
+        out_path = out_dir / f"{stem}.pdf"
         if skip_existing and out_path.exists():
             continue
 
