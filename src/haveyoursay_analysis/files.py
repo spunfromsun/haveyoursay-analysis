@@ -9,8 +9,10 @@ import requests
 from tqdm import tqdm
 
 # Default document download endpoint. Adjust if the EC API changes.
+# Note: `/api/document/{id}` returns the SPA HTML page; the binary file is
+# served by `/api/download/{id}` (with a Content-Disposition attachment header).
 BASE_URL = "https://ec.europa.eu/info/law/better-regulation"
-DOCUMENT_URL_TEMPLATE = f"{BASE_URL}/api/document/{{document_id}}"
+DOCUMENT_URL_TEMPLATE = f"{BASE_URL}/api/download/{{document_id}}"
 
 
 @backoff.on_exception(backoff.expo, (requests.RequestException,), max_tries=5)
